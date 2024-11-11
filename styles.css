@@ -1,0 +1,64 @@
+/* Estilos globales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Título centrado */
+.title {
+    text-align: center;
+    padding: 20px;
+    color: #333;
+}
+
+/* Contenedor principal con diseño en cuadrícula */
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+    justify-items: center;
+}
+
+/* Sección de cada imagen */
+.image-section {
+    width: 500px;
+    height: 300px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+}
+
+/* Imagen de cada sección */
+.image-section img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Contenedor de botones */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 40px;
+}
+
+/* Estilos de los botones */
+button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
