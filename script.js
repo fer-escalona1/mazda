@@ -1,12 +1,11 @@
 // Seleccionar todos los botones de corazón
 document.querySelectorAll('.heart-button').forEach(button => {
     button.addEventListener('click', () => {
-      // Alternar la clase 'active' al hacer clic
-      button.classList.toggle('active');
+        button.classList.toggle('active');
     });
-  });
-  
+});
 
+// Datos de los vehículos
 const vehicleData = {
     1: {
         name: "Mazda 2 Sedan",
@@ -54,15 +53,17 @@ const vehicleData = {
     }
 };
 
+// Mostrar detalles del vehículo en el modal
 function showVehicleDetails(vehicleId) {
     const vehicle = vehicleData[vehicleId];
-    // Establecer la imagen del vehículo
+
+    // Imagen del vehículo
     document.getElementById('modalImage').src = vehicle.image;
 
-    // Establecer el título del modal
+    // Título del modal
     document.getElementById('carModalLabel').textContent = `Características del vehículo: ${vehicle.name}`;
 
-    // Generar las filas de características
+    // Generar HTML con las características
     let detailsHTML = '';
     vehicle.features.forEach(feature => {
         detailsHTML += `
@@ -73,7 +74,7 @@ function showVehicleDetails(vehicleId) {
         `;
     });
 
-    // Insertar las características en el modal
+    // Insertar características en el modal
     document.getElementById('vehicleDetails').innerHTML = detailsHTML;
 
     // Mostrar el modal
