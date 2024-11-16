@@ -48,17 +48,69 @@ body {
     margin-top: 40px;
 }
 
-/* Estilos de los botones */
-button {
+
+/* Estilos para la barra de navegación */
+.navbar {
+    background-color : #000000 ; /* Fondo negro */
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link {
+    color: #ffffff; /* Texto blanco */
+}
+
+.navbar .nav-link:hover {
+    color: #cccccc; /* Color gris claro al pasar el ratón */
+}
+
+/* Estilos específicos para los botones "Ver" */
+.buttons button:not(.heart-button) {
     padding: 5px 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #007bff;
+    background-color: #910A2D;
     color: #fff;
     transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #0056b3;
+.buttons button:not(.heart-button):hover {
+    background-color: #000000; /* Color de fondo al pasar el ratón */
+}
+
+/* Estilos exclusivos para el botón de favoritos */
+.heart-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    font-size: 0;
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.heart-button::before,
+.heart-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    clip-path: path("M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z");
+    transition: background-color 0.3s;
+}
+
+.heart-button::before {
+    background-color: gray;
+}
+
+.heart-button.active::before {
+    background-color: #910A2D;
+}
+
+.heart-button:hover {
+    background: none; 
 }
