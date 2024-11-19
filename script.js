@@ -1,9 +1,20 @@
+// Simulación de estado de sesión (puedes adaptarlo según tu lógica real)
+let isLoggedIn = false; // Cambia a true si el usuario ha iniciado sesión
+
 // Seleccionar todos los botones de corazón
 document.querySelectorAll('.heart-button').forEach(button => {
     button.addEventListener('click', () => {
-        button.classList.toggle('active');
+        if (!isLoggedIn) {
+            // Mostrar modal de inicio de sesión
+            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            loginModal.show();
+        } else {
+            // Alternar estado activo del botón
+            button.classList.toggle('active');
+        }
     });
 });
+
 
 // Datos de los vehículos
 const vehicleData = {
@@ -80,4 +91,6 @@ function showVehicleDetails(vehicleId) {
     // Mostrar el modal
     const modal = new bootstrap.Modal(document.getElementById('carModal'));
     modal.show();
+
+    
 }
