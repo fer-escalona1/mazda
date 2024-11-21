@@ -1,3 +1,7 @@
+<?php
+//solicitar el archivo de conección a la base de datos
+include 'connect.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -26,9 +30,6 @@
                 <a class="nav-link" href="#">Favoritos</a>
               </li>
             </ul>
-            <form role="search">
-              <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-            </form>
           </div>
         </div>
     </nav>
@@ -139,8 +140,8 @@
                 <p>Debes iniciar sesión para guardar en favoritos.</p>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <a href="/mazda/register.html" class="btn btn-secondary">Regístrate</a>
-                <a href="/mazda/login.html" class="btn btn-primary" style="background-color: #910A2D; border-color: #910A2D; color: white;">Iniciar Sesión</a>
+                <a href="/register.php" class="btn btn-secondary">Regístrate</a>
+                <a href="/login.php" class="btn btn-primary" style="background-color: #910A2D; border-color: #910A2D; color: white;">Iniciar Sesión</a>
             </div>
         </div>
     </div>

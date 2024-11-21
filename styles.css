@@ -193,3 +193,82 @@ body {
         max-width: 100%;
     }
 }
+
+.offcanvas {
+    width: 30%; /* Ajusta el ancho del modal si es necesario */
+  }
+  
+  #registrarVenta {
+    background-color: #910A2D; /* Color personalizado */
+    border-color: #910A2D;
+  }
+  #registrarVenta:hover {
+    background-color: #720823;
+    border-color: #720823;
+  }
+
+  /* Estilos para el modal y los botones */
+.modal-body {
+    padding: 20px;
+}
+
+/* Estilo para los botones dentro del modal */
+button#registrarVenta {
+    width: 48%; /* Asegura que los botones se separen */
+}
+
+button[type="submit"] {
+    width: 48%; /* Asegura que los botones se separen */
+}
+
+/* Estilo para separar los botones en el formulario */
+.d-flex {
+    gap: 10px;
+}
+
+/* Diseño de los vehículos */
+.image-section {
+    margin-bottom: 20px;
+}
+
+.image-section img {
+    width: 100%;
+    height: auto;
+}
+
+/* Estilo de los botones de editar */
+.edit-button {
+    background-color: #910A2D;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.edit-button:hover {
+    background-color: #8a0928;
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 20px;
+}
+
+/* Espaciado para los botones */
+.d-flex {
+    gap: 10px;
+}
+
+/* Botón de edición */
+.edit-button {
+    background-color: #910A2D;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.edit-button:hover {
+    background-color: #8a0928;
+}
+

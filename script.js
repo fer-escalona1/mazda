@@ -92,3 +92,31 @@ function showVehicleDetails(vehicleId) {
     modal.show();
     
 }
+
+// Información simulada (reemplazar con datos reales en un sistema dinámico)
+const autos = [
+    { modelo: "Mazda 2 Sedan", precio: "$300,000 MXN", trabajador: "Juan Pérez" },
+    { modelo: "Mazda CX-3", precio: "$350,000 MXN", trabajador: "Ana López" },
+    { modelo: "Mazda CX-50", precio: "$500,000 MXN", trabajador: "Carlos Gómez" },
+    { modelo: "Mazda CX-90", precio: "$700,000 MXN", trabajador: "Laura Méndez" },
+];
+
+// Seleccionar todos los botones "Registrar Venta"
+document.querySelectorAll(".registrar-venta-btn").forEach((boton, index) => {
+    boton.addEventListener("click", () => {
+        const auto = autos[index]; // Selecciona el auto correspondiente al botón
+        document.getElementById("nombreTrabajador").textContent = auto.trabajador;
+        document.getElementById("modeloAuto").textContent = auto.modelo;
+        document.getElementById("precioAuto").textContent = auto.precio;
+
+        // Generar fecha y hora dinámicas
+        const fecha = new Date();
+        const fechaFormat = fecha.toLocaleDateString("es-MX", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+        });
+        const horaFormat = fecha.toLocaleTimeString("es-MX");
+        document.getElementById("fechaHora").textContent = `${fechaFormat}, ${horaFormat}`;
+    });
+});
