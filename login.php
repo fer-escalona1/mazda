@@ -94,10 +94,10 @@ if (isset($_POST['entrar'])) {
 
         <!-- Enlaces Adicionales -->
         <p class="text-center mt-3">
-            ¿No tienes cuenta? <a href="/register.html">Regístrate aquí</a>
+            ¿No tienes cuenta? <a href="/mazda/register.php">Regístrate aquí</a>
         </p>
         <p class="text-center mt-3">
-            <a href="/index.html" class="btn btn-secondary w-100">Regresar al Catálogo</a>
+            <a href="/mazda/index.php" class="btn btn-secondary w-100">Regresar al Catálogo</a>
         </p>
     </div>
 

@@ -140,8 +140,8 @@ include 'connect.php';
                 <p>Debes iniciar sesión para guardar en favoritos.</p>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <a href="/register.php" class="btn btn-secondary">Regístrate</a>
-                <a href="/login.php" class="btn btn-primary" style="background-color: #910A2D; border-color: #910A2D; color: white;">Iniciar Sesión</a>
+                <a href="/mazda/register.php" class="btn btn-secondary">Regístrate</a>
+                <a href="/mazda/login.php" class="btn btn-primary" style="background-color: #910A2D; border-color: #910A2D; color: white;">Iniciar Sesión</a>
             </div>
         </div>
     </div>
