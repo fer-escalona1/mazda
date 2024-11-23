@@ -1,5 +1,5 @@
 <?php
-//solicitar el archivo de conección a la base de datos
+// Solicitar el archivo de conexión a la base de datos
 include 'connect.php';
 ?>
 <!DOCTYPE html>
@@ -74,78 +74,74 @@ include 'connect.php';
         </button>
     </div>
 
-    <!-- CATALOGO -->
     <h1 id="c" class="title">Catálogo</h1>
-    <div class="container">
-        <div class="image-section" id="vehicle1">
-            <h4>Mazda 2 Sedan</h4>
-            <img src="mazda2sedan.png" alt="Mazda 2 Sedan">
-            <div class="buttons">
-                <button onclick="showVehicleDetails(1)">Ver</button>
-                <button class="heart-button"></button>
-            </div>
-        </div>
-        <div class="image-section" id="vehicle2">
-            <h4>Mazda CX-3</h4>
-            <img src="mazdacx3.png" alt="Mazda CX-3">
-            <div class="buttons">
-                <button onclick="showVehicleDetails(2)">Ver</button>
-                <button class="heart-button"></button>
-            </div>
-        </div>
-        <div class="image-section" id="vehicle3">
-            <h4>Mazda CX-50</h4>
-            <img src="mazdacx50.png" alt="Mazda CX-50">
-            <div class="buttons">
-                <button onclick="showVehicleDetails(3)">Ver</button>
-                <button class="heart-button"></button>
-            </div>
-        </div>
-        <div class="image-section" id="vehicle4">
-            <h4>Mazda CX-90</h4>
-            <img src="mazdacx90.png" alt="Mazda CX-90">
-            <div class="buttons">
-                <button onclick="showVehicleDetails(4)">Ver</button>
-                <button class="heart-button"></button>
-            </div>
-        </div>
+    <div class="container" id="catalogContainer">
+        <?php
+            // Consultar los vehículos desde la base de datos
+            $query = "SELECT * FROM vehiculos";
+            $result = $connect->query($query);
+
+            if ($result && $result->num_rows > 0) {
+                // Generar una tarjeta por cada vehículo
+                while ($row = $result->fetch_assoc()) {
+                    echo '
+                    <div class="card" style="width: 18rem; margin: 10px;">
+                        <img src="' . $row['Imagen'] . '" class="card-img-top" alt="' . $row['Modelo'] . '">
+                        <div class="card-body">
+                            <h5 class="card-title">' . $row['Modelo'] . '</h5>
+                            <p class="card-text">Precio: $' . number_format($row['Precio'], 2) . '</p>
+                            <button class="btn btn-primary" onclick="showVehicleDetails(' . $row['ID'] . ')">Ver</button>
+                            <button class="btn btn-danger">Favoritos</button>
+                        </div>
+                    </div>';
+                }
+            } else {
+                echo '<p>No hay vehículos disponibles en este momento.</p>';
+            }
+        ?>
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="carModal" tabindex="-1" aria-labelledby="carModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-xl">
+<div class="modal fade" id="carModal" tabindex="-1" aria-labelledby="carModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="carModalLabel">Detalles del vehículo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img id="modalImage" src="" alt="" class="img-fluid mb-3">
+        <div id="vehicleDetails"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+    <!-- INICIO DE SESIÓN-->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="carModalLabel">Características del vehículo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
-                <div class="modal-body">
-                    <img id="modalImage" src="" alt="Imagen del vehículo" class="img-fluid mb-4">
-                    <div id="vehicleDetails"></div>
+                <div class="modal-body text-center">
+                    <p>Debes iniciar sesión para guardar en favoritos.</p>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <a href="/mazda/register.php" class="btn btn-secondary">Regístrate</a>
+                    <a href="/mazda/login.php" class="btn btn-primary" style="background-color: #910A2D; border-color: #910A2D; color: white;">Iniciar Sesión</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- INICIO DE SESIÓN-->
-     <!-- Modal de inicio de sesión -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body text-center">
-                <p>Debes iniciar sesión para guardar en favoritos.</p>
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <a href="/mazda/register.php" class="btn btn-secondary">Regístrate</a>
-                <a href="/mazda/login.php" class="btn btn-primary" style="background-color: #910A2D; border-color: #910A2D; color: white;">Iniciar Sesión</a>
-            </div>
-        </div>
-    </div>
-</div>
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

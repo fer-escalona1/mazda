@@ -1,122 +1,71 @@
-// Simulación de estado de sesión (puedes adaptarlo según tu lógica real)
-let isLoggedIn = false; // Cambia a true si el usuario ha iniciado sesión
-// Seleccionar todos los botones de corazón
-document.querySelectorAll('.heart-button').forEach(button => {
-    button.addEventListener('click', () => {
-        button.classList.toggle('active');
-        if (!isLoggedIn) {
-            // Mostrar modal de inicio de sesión
-            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-            loginModal.show();
-        } else {
-            // Alternar estado activo del botón
-            button.classList.toggle('active');
-        }
-    });
-});
+async function loadVehicles() {
+    try {
+        const response = await fetch('getVehicles.php');
+        if (!response.ok) throw new Error('Error al cargar los datos.');
+        const vehicles = await response.json();
 
-// Datos de los vehículos
-const vehicleData = {
-    1: {
-        name: "Mazda 2 Sedan",
-        image: "mazda2sedan.png",
-        features: [
-            { name: "Modelo", value: "Mazda 2 Sedan" },
-            { name: "Motor", value: "2.0L I4" },
-            { name: "Transmisión", value: "Automática" },
-            { name: "Color", value: "Rojo" },
-            { name: "Año", value: "2024" }
-        ]
-    },
-    2: {
-        name: "Mazda CX-3",
-        image: "mazdacx3.png",
-        features: [
-            { name: "Modelo", value: "Mazda CX-3" },
-            { name: "Motor", value: "2.5L I4" },
-            { name: "Transmisión", value: "Manual" },
-            { name: "Color", value: "Blanco" },
-            { name: "Año", value: "2023" }
-        ]
-    },
-    3: {
-        name: "Mazda CX-50",
-        image: "mazdacx50.png",
-        features: [
-            { name: "Modelo", value: "Mazda CX-50" },
-            { name: "Motor", value: "3.0L V6" },
-            { name: "Transmisión", value: "Automática" },
-            { name: "Color", value: "Negro" },
-            { name: "Año", value: "2023" }
-        ]
-    },
-    4: {
-        name: "Mazda CX-90",
-        image: "mazdacx90.png",
-        features: [
-            { name: "Modelo", value: "Mazda CX-90" },
-            { name: "Motor", value: "2.5L I4" },
-            { name: "Transmisión", value: "Automática" },
-            { name: "Color", value: "Gris" },
-            { name: "Año", value: "2024" }
-        ]
+        // Generar las tarjetas de cada vehículo
+        const catalogContainer = document.getElementById('catalogContainer');
+        catalogContainer.innerHTML = '';
+
+        vehicles.forEach(vehicle => {
+            const vehicleCard = document.createElement('div');
+            vehicleCard.className = 'card';
+            vehicleCard.style = 'width: 18rem; margin: 10px;';
+            vehicleCard.innerHTML = `
+                <img src="${vehicle.Imagen}" class="card-img-top" alt="${vehicle.Modelo}">
+                <div class="card-body">
+                    <h5 class="card-title">${vehicle.Modelo}</h5>
+                    <p class="card-text">Precio: $${vehicle.Precio}</p>
+                    <button class="btn btn-primary" onclick="showVehicleDetails(${vehicle.ID})">Ver</button>
+                    <button class="btn btn-danger">Favoritos</button>
+                </div>
+            `;
+            catalogContainer.appendChild(vehicleCard);
+        });
+    } catch (error) {
+        console.error('Error al cargar el catálogo:', error);
     }
-};
+}
 
 // Mostrar detalles del vehículo en el modal
 function showVehicleDetails(vehicleId) {
-    const vehicle = vehicleData[vehicleId];
+    // Solicitar datos del vehículo
+    fetch('getVehiclesDetails.php?id=' + vehicleId)
+        .then(response => response.json())
+        .then(data => {
+            if (data) {
+                // Actualizar los detalles del modal
+                document.getElementById('modalImage').src = data.Imagen;
+                document.getElementById('modalImage').alt = data.Modelo;
 
-    // Imagen del vehículo
-    document.getElementById('modalImage').src = vehicle.image;
+                const details = `
+                    <div><strong>Modelo:</strong> ${data.Modelo}</div>
+                    <div><strong>Color:</strong> ${data.Color}</div>
+                    <div><strong>Año:</strong> ${data.Año}</div>
+                    <div><strong>Tipo de Motor:</strong> ${data.TipoMotor}</div>
+                    <div><strong>Potencia:</strong> ${data.Potencia}</div>
+                    <div><strong>Torque:</strong> ${data.Torque}</div>
+                    <div><strong>Rendimiento de Combustible:</strong> ${data.RenComb}</div>
+                    <div><strong>Peso:</strong> ${data.Peso}</div>
+                    <div><strong>Aceite:</strong> ${data.Aceite}</div>
+                    <div><strong>Dimensiones:</strong> ${data.Dimensiones}</div>
+                    <div><strong>Precio:</strong> $${parseFloat(data.Precio).toFixed(2)}</div>
+                `;
 
-    // Título del modal
-    document.getElementById('carModalLabel').textContent = `Características del vehículo: ${vehicle.name}`;
+                document.getElementById('vehicleDetails').innerHTML = details;
 
-    // Generar HTML con las características
-    let detailsHTML = '';
-    vehicle.features.forEach(feature => {
-        detailsHTML += `
-            <div class="row mb-2">
-                <div class="col-6"><strong>${feature.name}:</strong></div>
-                <div class="col-6">${feature.value}</div>
-            </div>
-        `;
-    });
-
-    // Insertar características en el modal
-    document.getElementById('vehicleDetails').innerHTML = detailsHTML;
-
-    // Mostrar el modal
-    const modal = new bootstrap.Modal(document.getElementById('carModal'));
-    modal.show();
-    
+                // Mostrar el modal
+                const modal = new bootstrap.Modal(document.getElementById('carModal'));
+                modal.show();
+            } else {
+                alert('No se encontraron datos del vehículo.');
+            }
+        })
+        .catch(error => console.error('Error al obtener los datos del vehículo:', error));
 }
 
-// Información simulada (reemplazar con datos reales en un sistema dinámico)
-const autos = [
-    { modelo: "Mazda 2 Sedan", precio: "$300,000 MXN", trabajador: "Juan Pérez" },
-    { modelo: "Mazda CX-3", precio: "$350,000 MXN", trabajador: "Ana López" },
-    { modelo: "Mazda CX-50", precio: "$500,000 MXN", trabajador: "Carlos Gómez" },
-    { modelo: "Mazda CX-90", precio: "$700,000 MXN", trabajador: "Laura Méndez" },
-];
 
-// Seleccionar todos los botones "Registrar Venta"
-document.querySelectorAll(".registrar-venta-btn").forEach((boton, index) => {
-    boton.addEventListener("click", () => {
-        const auto = autos[index]; // Selecciona el auto correspondiente al botón
-        document.getElementById("nombreTrabajador").textContent = auto.trabajador;
-        document.getElementById("modeloAuto").textContent = auto.modelo;
-        document.getElementById("precioAuto").textContent = auto.precio;
 
-        // Generar fecha y hora dinámicas
-        const fecha = new Date();
-        const fechaFormat = fecha.toLocaleDateString("es-MX", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-        });
-        const horaFormat = fecha.toLocaleTimeString("es-MX");
-        document.getElementById("fechaHora").textContent = `${fechaFormat}, ${horaFormat}`;
-    });
-});
+// Cargar vehículos al inicio
+document.addEventListener('DOMContentLoaded', loadVehicles);
