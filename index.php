@@ -35,10 +35,10 @@ include 'connect.php';
                     <a class="nav-link" href="login.php">Iniciar sesión</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="login.php">Vendedor</a>
+                    <a class="nav-link" href="loginV.php">Vendedor</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="login.php">Administrador</a>
+                    <a class="nav-link" href="loginA.php">Administrador</a>
                 </li>
             </ul>
           </div>

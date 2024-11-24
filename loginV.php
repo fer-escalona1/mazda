@@ -25,8 +25,8 @@ if (isset($_POST['entrar'])) {
     // Verificamos si la clave y la contraseña son correctas
     if ($claveok && $passok) {
         $_SESSION["login"] = TRUE;
-        $_SESSION["Vendedor"] = $claveok; // Guardamos la clave en sesión (o el nombre si lo prefieres)
-        header("Location: principal.php");
+        $_SESSION["Vendedor"] = $claveok; // Guardamos la clave en sesión
+        header("Location: indexTrabajadores.php"); // Redirigimos al catálogo
         exit; // Detenemos la ejecución tras redirigir
     } else {
         $mensaje = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
