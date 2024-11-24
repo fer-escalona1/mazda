@@ -27,35 +27,6 @@ async function loadVehicles() {
     }
 }
 
-// Función para cargar los vehículos
-async function loadVehicles() {
-    try {
-        const response = await fetch('getVehicles.php');
-        if (!response.ok) throw new Error('Error al cargar los datos.');
-        const vehicles = await response.json();
-
-        const catalogContainer = document.getElementById('catalogContainer');
-        catalogContainer.innerHTML = ''; // Limpiar el contenedor antes de agregar nuevos elementos
-
-        vehicles.forEach(vehicle => {
-            const vehicleCard = document.createElement('div');
-            vehicleCard.className = 'vehicle-card';
-            vehicleCard.innerHTML = `
-                <img src="${vehicle.Imagen}" class="vehicle-img" alt="${vehicle.Modelo}">
-                <div class="vehicle-details">
-                    <h5 class="vehicle-model">${vehicle.Modelo}</h5>
-                    <p class="vehicle-price">Precio: $${vehicle.Precio}</p>
-                    <button class="vehicle-btn" onclick="showVehicleDetails(${vehicle.ID})">Ver</button>
-                    <button class="favorites-btn">Favoritos</button>
-                </div>
-            `;
-            catalogContainer.appendChild(vehicleCard);
-        });
-    } catch (error) {
-        console.error('Error al cargar el catálogo:', error);
-    }
-}
-
 // Mostrar detalles del vehículo en el modal
 function showVehicleDetails(vehicleId) {
     fetch('getVehiclesDetails.php?id=' + vehicleId)
@@ -67,14 +38,11 @@ function showVehicleDetails(vehicleId) {
         })
         .then(data => {
             if (data) {
-                // Verificar si el modal y la imagen existen
+                // Actualizar la imagen y detalles en el modal
                 const modalImage = document.getElementById('modalImage');
                 if (modalImage) {
                     modalImage.src = data.Imagen;
                     modalImage.alt = data.Modelo;
-                } else {
-                    console.error('El elemento #modalImage no existe en el DOM.');
-                    return;
                 }
 
                 // Generar el resto de los detalles
@@ -94,18 +62,15 @@ function showVehicleDetails(vehicleId) {
 
                 const vehicleDetails = document.getElementById('vehicleDetails');
                 if (vehicleDetails) {
-                    vehicleDetails.innerHTML = details;
-                } else {
-                    console.error('El elemento #vehicleDetails no existe en el DOM.');
-                    return;
+                    vehicleDetails.innerHTML = details + `
+                    <button class="close-btn" onclick="closeModal()">Cancelar</button>
+                    `;
                 }
 
                 // Mostrar el modal
                 const modal = document.getElementById('carModal');
                 if (modal) {
                     modal.style.display = 'block';
-                } else {
-                    console.error('El elemento #carModal no existe en el DOM.');
                 }
             } else {
                 alert('No se encontraron datos del vehículo.');
@@ -121,8 +86,6 @@ function closeModal() {
         // Resetear los elementos del modal
         document.getElementById('modalImage').src = '';
         document.getElementById('vehicleDetails').innerHTML = '';
-    } else {
-        console.error('El elemento #carModal no existe en el DOM.');
     }
 }
 

@@ -105,14 +105,17 @@ include 'connect.php';
 <!-- Contenedor para el catálogo de vehículos -->
 <div id="catalogContainer"></div>
 
-<!-- Modal para ver detalles del vehículo -->
-<div id="carModal" style="display: none;">
+<!-- Modal -->
+<div id="carModal">
     <div id="vehicleDetails">
-        <!-- Aquí se insertarán los detalles del vehículo -->
-        <img id="modalImage" alt="Vehicle Image">    </div>
-        <button onclick="closeModal()">Cerrar</button>
-
+        <!-- Imagen del vehículo -->
+        <img id="modalImage" src="" alt="" class="vehicle-img">
+        <div class="modal-body"></div>
+        <!-- Botón de Cerrar -->
+        <button class="close-btn" onclick="closeModal()">Cancelar</button>
+    </div>
 </div>
+
 
 
 
