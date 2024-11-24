@@ -29,6 +29,12 @@ include 'connect.php';
               <li class="nav-item">
                 <a class="nav-link" href="#">Favoritos</a>
               </li>
+              <li class="nav-item">
+                    <a class="nav-link" href="register.php">Registrarse</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.php">Iniciar sesión</a>
+                </li>
             </ul>
           </div>
         </div>
