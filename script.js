@@ -48,6 +48,7 @@ function showVehicleDetails(vehicleId) {
                 // Generar el resto de los detalles
                 const details = `
                     <div><strong>Modelo:</strong> ${data.Modelo}</div>
+                    <div><strong></strong><br><img src="${data.Imagen}" alt="Imagen de ${data.Modelo}" style="width:400PX"; height:auto; margin-bottom: 20px;"></div>
                     <div><strong>Color:</strong> ${data.Color}</div>
                     <div><strong>Año:</strong> ${data.Año}</div>
                     <div><strong>Tipo de Motor:</strong> ${data.TipoMotor}</div>

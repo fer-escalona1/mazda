@@ -103,13 +103,15 @@ include 'connect.php';
 
     <!-- Modal -->
 <!-- Contenedor para el catálogo de vehículos -->
-<div id="catalogContainer"></div>
+<div id="catalogContainer">
+    
+</div>
 
 <!-- Modal -->
 <div id="carModal">
     <div id="vehicleDetails">
         <!-- Imagen del vehículo -->
-        <img id="modalImage" src="" alt="" class="vehicle-img">
+        <img id="modalImage" src="" alt="Imagen del vehículo" class="img-fluid mb-4">
         <div class="modal-body"></div>
         <!-- Botón de Cerrar -->
         <button class="close-btn" onclick="closeModal()">Cancelar</button>
