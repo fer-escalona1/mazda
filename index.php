@@ -102,23 +102,20 @@ include 'connect.php';
     </div>
 
     <!-- Modal -->
-<div class="modal fade" id="carModal" tabindex="-1" aria-labelledby="carModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="carModalLabel">Detalles del vehículo</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <img id="modalImage" src="" alt="" class="img-fluid mb-3">
-        <div id="vehicleDetails"></div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
+<!-- Contenedor para el catálogo de vehículos -->
+<div id="catalogContainer"></div>
+
+<!-- Modal para ver detalles del vehículo -->
+<div id="carModal" style="display: none;">
+    <div id="vehicleDetails">
+        <!-- Aquí se insertarán los detalles del vehículo -->
+        <img id="modalImage" alt="Vehicle Image">    </div>
+        <button onclick="closeModal()">Cerrar</button>
+
 </div>
+
+
+
 
 </div>
 

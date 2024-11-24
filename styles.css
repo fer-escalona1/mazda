@@ -6,269 +6,171 @@ body {
     background-color: #f4f4f4;
 }
 
-/* Título centrado */
-.title {
-    text-align: center;
-    padding: 20px;
-    color: #333;
-}
-
-/* Contenedor principal con diseño en cuadrícula */
-.container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    padding: 20px;
-    justify-items: center;
-}
-
-/* Sección de cada imagen */
-.image-section {
-    width: 500px;
-    height: 350px;
-    text-align: center;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 30px;
-}
-
-/* Imagen de cada sección */
-.image-section img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-}
-
-/* Contenedor de botones */
-.buttons {
+/* Contenedor de las tarjetas de los vehículos */
+#catalogContainer {
     display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 40px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
 }
 
-
-/* Estilos para la barra de navegación */
-.navbar {
-    background-color : #000000 ; /* Fondo negro */
+/* Estilo para cada tarjeta de vehículo */
+.vehicle-card {
+    width: 250px;
+    margin: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
 }
 
-.navbar .navbar-brand,
-.navbar .nav-link {
-    color: #ffffff; /* Texto blanco */
+.vehicle-card:hover {
+    transform: scale(1.05);
 }
 
-.navbar .nav-link:hover {
-    color: #cccccc; /* Color gris claro al pasar el ratón */
+/* Imagen del vehículo */
+.vehicle-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
-/* Estilos específicos para los botones "Ver" */
-.buttons button:not(.heart-button) {
-    padding: 5px 10px;
+/* Detalles del vehículo */
+.vehicle-details {
+    padding: 15px;
+    text-align: center;
+}
+
+.vehicle-model {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.vehicle-price {
+    font-size: 1.1em;
+    color: #910A2D;
+    margin-bottom: 15px;
+}
+
+/* Botones de las tarjetas */
+.vehicle-btn,
+.favorites-btn {
+    padding: 8px 12px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin: 5px 0;
+}
+
+.vehicle-btn {
     background-color: #910A2D;
-    color: #fff;
-    transition: background-color 0.3s ease;
-}
-
-.buttons button:not(.heart-button):hover {
-    background-color: #000000; /* Color de fondo al pasar el ratón */
-}
-
-/* Estilos exclusivos para el botón de favoritos */
-.heart-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    outline: none;
-    font-size: 0;
-    position: relative;
-    width: 24px;
-    height: 24px;
-}
-
-.heart-button::before,
-.heart-button::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 24px;
-    height: 24px;
-    background-color: transparent;
-    clip-path: path("M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z");
+    color: white;
     transition: background-color 0.3s;
 }
 
-.heart-button::before {
-    background-color: gray;
+.vehicle-btn:hover {
+    background-color: #8a0928;
 }
 
-.heart-button.active::before {
-    background-color: #910A2D;
+.favorites-btn {
+    background-color: #ddd;
+    color: #333;
 }
 
-.heart-button:hover {
-    background: none; 
+.favorites-btn:hover {
+    background-color: #ccc;
 }
 
-.centered-title {
-    text-align: center;
-    width: 100%; /* Asegura que ocupe todo el espacio del modal */
-    margin: 0; /* Elimina cualquier margen extra */
-}
-
-.modal-body .row {
-    margin-bottom: 10px; /* Espacio entre las filas */
-}
-
-.modal-body .col-6 {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-/* Centrar el contenido del modal */
-.modal-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centra los elementos horizontalmente */
-    justify-content: center; /* Centra los elementos verticalmente */
-    text-align: center; /* Asegura que el texto también se centre */
-}
-
-/* Centrar la imagen */
-#modalImage {
-    max-width: 100%; /* Asegura que la imagen no se salga del contenedor */
-    height: auto;
-    margin-bottom: 20px; /* Espacio entre la imagen y las características */
-}
-
-/* Centrar el contenido del modal */
-.modal-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centra los elementos horizontalmente */
-    justify-content: center; /* Centra los elementos verticalmente */
-    text-align: center; /* Asegura que el texto también se centre */
-}
-
-/* Centrar la imagen */
-#modalImage {
-    max-width: 100%; /* Asegura que la imagen no se salga del contenedor */
-    height: auto;
-    margin-bottom: 20px; /* Espacio entre la imagen y las características */
-}
-
-/* Asegurar que las características estén centradas en dos columnas */
-#vehicleDetails {
-    display: flex;
-    flex-wrap: wrap; /* Permite que las características se ajusten dentro de las columnas */
-    justify-content: center; /* Centra las características en el modal */
-    gap: 20px; /* Espacio entre las características */
-    width: 100%; /* Asegura que ocupe todo el ancho disponible */
-}
-
-/* Asegurar que cada característica esté en una columna */
-.modal-body .row {
-    display: flex;
+/* Estilos para el modal de detalles */
+#carModal {
+    display: none; /* Modal oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
     justify-content: center;
-    gap: 15px; /* Espacio entre las columnas */
-    width: 100%; /* Ocupa todo el ancho del modal */
+    align-items: center;
 }
 
-/* Las columnas de las características */
-.modal-body .col-6 {
-    text-align: left; /* Alinea el texto de las características a la izquierda */
-    flex: 1 1 45%; /* 45% de ancho para cada columna */
-    max-width: 45%; /* Limita el tamaño de las columnas a 45% */
-}
-
-/* Asegura que no haya más de dos columnas */
-@media (max-width: 768px) {
-    .modal-body .col-6 {
-        flex: 1 1 100%; /* En pantallas más pequeñas, cada columna ocupará el 100% */
-        max-width: 100%;
-    }
-}
-
-.offcanvas {
-    width: 30%; /* Ajusta el ancho del modal si es necesario */
-  }
-  
-  #registrarVenta {
-    background-color: #910A2D; /* Color personalizado */
-    border-color: #910A2D;
-  }
-  #registrarVenta:hover {
-    background-color: #720823;
-    border-color: #720823;
-  }
-
-  /* Estilos para el modal y los botones */
-.modal-body {
+#vehicleDetails {
+    background-color: white;
     padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 800px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilo para los botones dentro del modal */
-button#registrarVenta {
-    width: 48%; /* Asegura que los botones se separen */
-}
-
-button[type="submit"] {
-    width: 48%; /* Asegura que los botones se separen */
-}
-
-/* Estilo para separar los botones en el formulario */
-.d-flex {
-    gap: 10px;
-}
-
-/* Diseño de los vehículos */
-.image-section {
+/* Imagen dentro del modal */
+#modalImage {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
     margin-bottom: 20px;
 }
 
-.image-section img {
+/* Estilo de los detalles del vehículo en el modal */
+.modal-body div {
+    margin-bottom: 10px;
+}
+
+/* Estilos del modal */
+#carModal {
+    display: none; /* Modal oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
 }
 
-/* Estilo de los botones de editar */
-.edit-button {
-    background-color: #910A2D;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-}
-
-.edit-button:hover {
-    background-color: #8a0928;
-}
-
-/* Modal Body */
-.modal-body {
+/* Contenedor de los detalles del vehículo en el modal */
+#vehicleDetails {
+    background-color: white;
     padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 800px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative; /* Aseguramos que el botón esté posicionado dentro de este contenedor */
 }
 
-/* Espaciado para los botones */
-.d-flex {
-    gap: 10px;
+/* Modal */
+#carModal {
+    display: none; /* Modal oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
 }
 
-/* Botón de edición */
-.edit-button {
+/* Botón de cierre */
+.close-btn {
+    padding: 10px;
     background-color: #910A2D;
     color: white;
     border: none;
-    padding: 10px;
+    border-radius: 5px;
     cursor: pointer;
+    margin-top: 10px;
+    align-self: flex-end;
 }
 
-.edit-button:hover {
+.close-btn:hover {
     background-color: #8a0928;
 }
+
 

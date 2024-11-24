@@ -1,24 +1,52 @@
+// Función para cargar los vehículos
 async function loadVehicles() {
     try {
         const response = await fetch('getVehicles.php');
         if (!response.ok) throw new Error('Error al cargar los datos.');
         const vehicles = await response.json();
 
-        // Generar las tarjetas de cada vehículo
         const catalogContainer = document.getElementById('catalogContainer');
-        catalogContainer.innerHTML = '';
+        catalogContainer.innerHTML = ''; // Limpiar el contenedor antes de agregar nuevos elementos
 
         vehicles.forEach(vehicle => {
             const vehicleCard = document.createElement('div');
-            vehicleCard.className = 'card';
-            vehicleCard.style = 'width: 18rem; margin: 10px;';
+            vehicleCard.className = 'vehicle-card';
             vehicleCard.innerHTML = `
-                <img src="${vehicle.Imagen}" class="card-img-top" alt="${vehicle.Modelo}">
-                <div class="card-body">
-                    <h5 class="card-title">${vehicle.Modelo}</h5>
-                    <p class="card-text">Precio: $${vehicle.Precio}</p>
-                    <button class="btn btn-primary" onclick="showVehicleDetails(${vehicle.ID})">Ver</button>
-                    <button class="btn btn-danger">Favoritos</button>
+                <img src="${vehicle.Imagen}" class="vehicle-img" alt="${vehicle.Modelo}">
+                <div class="vehicle-details">
+                    <h5 class="vehicle-model">${vehicle.Modelo}</h5>
+                    <p class="vehicle-price">Precio: $${vehicle.Precio}</p>
+                    <button class="vehicle-btn" onclick="showVehicleDetails(${vehicle.ID})">Ver</button>
+                    <button class="favorites-btn">Favoritos</button>
+                </div>
+            `;
+            catalogContainer.appendChild(vehicleCard);
+        });
+    } catch (error) {
+        console.error('Error al cargar el catálogo:', error);
+    }
+}
+
+// Función para cargar los vehículos
+async function loadVehicles() {
+    try {
+        const response = await fetch('getVehicles.php');
+        if (!response.ok) throw new Error('Error al cargar los datos.');
+        const vehicles = await response.json();
+
+        const catalogContainer = document.getElementById('catalogContainer');
+        catalogContainer.innerHTML = ''; // Limpiar el contenedor antes de agregar nuevos elementos
+
+        vehicles.forEach(vehicle => {
+            const vehicleCard = document.createElement('div');
+            vehicleCard.className = 'vehicle-card';
+            vehicleCard.innerHTML = `
+                <img src="${vehicle.Imagen}" class="vehicle-img" alt="${vehicle.Modelo}">
+                <div class="vehicle-details">
+                    <h5 class="vehicle-model">${vehicle.Modelo}</h5>
+                    <p class="vehicle-price">Precio: $${vehicle.Precio}</p>
+                    <button class="vehicle-btn" onclick="showVehicleDetails(${vehicle.ID})">Ver</button>
+                    <button class="favorites-btn">Favoritos</button>
                 </div>
             `;
             catalogContainer.appendChild(vehicleCard);
@@ -30,15 +58,26 @@ async function loadVehicles() {
 
 // Mostrar detalles del vehículo en el modal
 function showVehicleDetails(vehicleId) {
-    // Solicitar datos del vehículo
     fetch('getVehiclesDetails.php?id=' + vehicleId)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al obtener los datos del vehículo.');
+            }
+            return response.json();
+        })
         .then(data => {
             if (data) {
-                // Actualizar los detalles del modal
-                document.getElementById('modalImage').src = data.Imagen;
-                document.getElementById('modalImage').alt = data.Modelo;
+                // Verificar si el modal y la imagen existen
+                const modalImage = document.getElementById('modalImage');
+                if (modalImage) {
+                    modalImage.src = data.Imagen;
+                    modalImage.alt = data.Modelo;
+                } else {
+                    console.error('El elemento #modalImage no existe en el DOM.');
+                    return;
+                }
 
+                // Generar el resto de los detalles
                 const details = `
                     <div><strong>Modelo:</strong> ${data.Modelo}</div>
                     <div><strong>Color:</strong> ${data.Color}</div>
@@ -53,11 +92,21 @@ function showVehicleDetails(vehicleId) {
                     <div><strong>Precio:</strong> $${parseFloat(data.Precio).toFixed(2)}</div>
                 `;
 
-                document.getElementById('vehicleDetails').innerHTML = details;
+                const vehicleDetails = document.getElementById('vehicleDetails');
+                if (vehicleDetails) {
+                    vehicleDetails.innerHTML = details;
+                } else {
+                    console.error('El elemento #vehicleDetails no existe en el DOM.');
+                    return;
+                }
 
                 // Mostrar el modal
-                const modal = new bootstrap.Modal(document.getElementById('carModal'));
-                modal.show();
+                const modal = document.getElementById('carModal');
+                if (modal) {
+                    modal.style.display = 'block';
+                } else {
+                    console.error('El elemento #carModal no existe en el DOM.');
+                }
             } else {
                 alert('No se encontraron datos del vehículo.');
             }
@@ -65,7 +114,17 @@ function showVehicleDetails(vehicleId) {
         .catch(error => console.error('Error al obtener los datos del vehículo:', error));
 }
 
+function closeModal() {
+    const modal = document.getElementById('carModal');
+    if (modal) {
+        modal.style.display = 'none';
+        // Resetear los elementos del modal
+        document.getElementById('modalImage').src = '';
+        document.getElementById('vehicleDetails').innerHTML = '';
+    } else {
+        console.error('El elemento #carModal no existe en el DOM.');
+    }
+}
 
-
-// Cargar vehículos al inicio
+// Cargar vehículos al iniciar la página
 document.addEventListener('DOMContentLoaded', loadVehicles);
