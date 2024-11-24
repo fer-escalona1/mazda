@@ -3,26 +3,26 @@ session_start(); // Iniciar la sesión
 
 // Verificar si el vendedor está logueado
 if (!isset($_SESSION["login"])) {
-    header("Location: loginV.php"); // Redirigir al login si no está logueado
+    header("Location: loginA.php"); // Redirigir al login si no está logueado
     exit;
 }
 
-// Obtener la clave del vendedor logueado
-$vendedorClave = $_SESSION["Vendedor"];
+// Obtener la clave del admin logueado
+$adminClave = $_SESSION["Admin"];
 
-// Conectar a la base de datos para obtener información del vendedor
+// Conectar a la base de datos para obtener información del admin
 include 'connect.php';
-$consulta = "SELECT Nombre FROM vendedores WHERE ClaveT = '$vendedorClave'";
+$consulta = "SELECT Nombre FROM aministradores WHERE ClaveAmin = '$adminClave'";
 $resultado = $connect->query($consulta);
-$vendedor = $resultado->fetch_assoc();
-$nombreVendedor = $vendedor['Nombre'];
+$admin = $resultado->fetch_assoc();
+$nombreadmin = $admin['Nombre'];
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo - Vendedores</title>
+    <title>Catálogo - Administradores</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -57,7 +57,7 @@ $nombreVendedor = $vendedor['Nombre'];
 
     <!-- Bienvenida al Vendedor -->
     <div class="container mt-4">
-        <h3>Bienvenido, <?php echo $nombreVendedor; ?>.</h3>
+        <h3>Bienvenido, <?php echo $nombreadmin; ?>.</h3>
     </div>
 
     <!-- CATALOGO -->

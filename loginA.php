@@ -26,7 +26,7 @@ if (isset($_POST['entrar'])) {
     if ($claveok && $passok) {
         $_SESSION["login"] = TRUE;
         $_SESSION["Admin"] = $claveok; // Guardamos la clave en sesión (o el nombre si lo prefieres)
-        header("Location: principal.php");
+        header("Location: indexAdmin.php");
         exit; // Detenemos la ejecución tras redirigir
     } else {
         $mensaje = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
