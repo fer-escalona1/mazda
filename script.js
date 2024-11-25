@@ -90,5 +90,7 @@ function closeModal() {
     }
 }
 
+
+
 // Cargar vehículos al iniciar la página
 document.addEventListener('DOMContentLoaded', loadVehicles);
