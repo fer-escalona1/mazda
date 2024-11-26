@@ -25,9 +25,9 @@ $nombreadmin = $admin['Nombre'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #000000;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Agencia Automotriz</a>
+            <<img src="logo.png" alt="Logo" width="70px">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -35,6 +35,9 @@ $nombreadmin = $admin['Nombre'];
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link active" href="#catalogContainer">Catálogo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/mazda/ventas.php">Ventas</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
@@ -67,6 +70,8 @@ $nombreadmin = $admin['Nombre'];
                                 <h5 class="card-title">' . $row['Modelo'] . '</h5>
                                 <p class="card-text">Precio: $' . number_format($row['precio'], 2) . '</p>
                                 <button class="btn btn-primary" onclick="showVehicleDetails(' . $row['ID'] . ')">Editar</button>
+                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editVehicleModal" onclick="showVehicleDetails(' . $row['ID'] . ')">Editar</button>
+
                             </div>
                         </div>
                     </div>';
@@ -78,42 +83,44 @@ $nombreadmin = $admin['Nombre'];
         </div>
     </div>
 
-    <!-- Modal para editar -->
-    <div class="modal" id="carModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Editar Vehículo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="editVehicleForm">
-                        <input type="hidden" name="id" id="vehicleId">
-                        <div class="mb-3">
-                            <label for="modelo" class="form-label">Modelo</label>
-                            <input type="text" class="form-control" name="modelo" id="modelo">
-                        </div>
-                        <div class="mb-3">
-                            <label for="color" class="form-label">Color</label>
-                            <input type="text" class="form-control" name="color" id="color">
-                        </div>
-                        <div class="mb-3">
-                            <label for="anio" class="form-label">Año</label>
-                            <input type="number" class="form-control" name="anio" id="anio">
-                        </div>
-                        <div class="mb-3">
-                            <label for="precio" class="form-label">Precio</label>
-                            <input type="number" class="form-control" step="0.01" name="precio" id="precio">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" onclick="saveChanges()">Guardar Cambios</button>
-                </div>
+    <!-- Modal para editar vehículo -->
+<div class="modal fade" id="editVehicleModal" tabindex="-1" aria-labelledby="editVehicleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editVehicleModalLabel">Editar Vehículo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario de edición de vehículo -->
+                <form id="editVehicleForm">
+                    <input type="hidden" name="id" id="vehicleId">
+                    <div class="mb-3">
+                        <label for="modelo" class="form-label">Modelo</label>
+                        <input type="text" class="form-control" name="modelo" id="modelo">
+                    </div>
+                    <div class="mb-3">
+                        <label for="color" class="form-label">Color</label>
+                        <input type="text" class="form-control" name="color" id="color">
+                    </div>
+                    <div class="mb-3">
+                        <label for="anio" class="form-label">Año</label>
+                        <input type="number" class="form-control" name="anio" id="anio">
+                    </div>
+                    <div class="mb-3">
+                        <label for="precio" class="form-label">Precio</label>
+                        <input type="number" class="form-control" step="0.01" name="precio" id="precio">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="saveChanges()">Guardar Cambios</button>
             </div>
         </div>
     </div>
+</div>
+
 
     <script>
         function showVehicleDetails(vehicleId) {
@@ -136,25 +143,7 @@ $nombreadmin = $admin['Nombre'];
                 .catch(error => console.error('Error al obtener los datos del vehículo:', error));
         }
 
-        function saveChanges() {
-            const form = document.getElementById('editVehicleForm');
-            const formData = new FormData(form);
-
-            fetch('updateVehicle.php', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert(data.message);
-                        location.reload();
-                    } else {
-                        alert(data.message);
-                    }
-                })
-                .catch(error => console.error('Error al actualizar el vehículo:', error));
-        }
+       
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

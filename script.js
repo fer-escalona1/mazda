@@ -1,8 +1,9 @@
-// Función para cargar los vehículos
+// Función para cargar los vehículos desde la base de datos
 async function loadVehicles() {
     try {
-        const response = await fetch('getVehicles.php');
+        const response = await fetch('getVehicles.php'); // Archivo que devuelve datos en JSON
         if (!response.ok) throw new Error('Error al cargar los datos.');
+
         const vehicles = await response.json();
 
         const catalogContainer = document.getElementById('catalogContainer');
@@ -10,14 +11,16 @@ async function loadVehicles() {
 
         vehicles.forEach(vehicle => {
             const vehicleCard = document.createElement('div');
-            vehicleCard.className = 'vehicle-card';
+            vehicleCard.className = 'card';
+            vehicleCard.style.width = '18rem';
+            vehicleCard.style.margin = '10px';
             vehicleCard.innerHTML = `
-                <img src="${vehicle.Imagen}" class="vehicle-img" alt="${vehicle.Modelo}">
-                <div class="vehicle-details">
-                    <h5 class="vehicle-model">${vehicle.Modelo}</h5>
-                    <p class="vehicle-price">Precio: $${vehicle.Precio}</p>
-                    <button class="vehicle-btn" onclick="showVehicleDetails(${vehicle.ID})">Ver</button>
-                    <button class="favorites-btn">Favoritos</button>
+                <img src="${vehicle.Imagen}" class="card-img-top" alt="${vehicle.Modelo}">
+                <div class="card-body">
+                    <h5 class="card-title">${vehicle.Modelo}</h5>
+                    <p class="card-text">Precio: $${parseFloat(vehicle.Precio).toFixed(2)}</p>
+                    <button class="btn btn-primary" onclick="showVehicleDetails(${vehicle.ID})">Ver</button>
+                    <button class="favorites-btn" onclick="showLoginMessage()">Favoritos</button>
                 </div>
             `;
             catalogContainer.appendChild(vehicleCard);
@@ -26,6 +29,42 @@ async function loadVehicles() {
         console.error('Error al cargar el catálogo:', error);
     }
 }
+
+function showLoginMessage() {
+    const catalogContainer = document.getElementById('catalogContainer');
+
+    // Verifica si ya hay un mensaje existente
+    let existingMessage = document.getElementById('loginMessage');
+    if (!existingMessage) {
+        const message = document.createElement('div');
+        message.id = 'loginMessage';
+        message.style.backgroundColor = '#f8d7da';
+        message.style.color = '#721c24';
+        message.style.padding = '10px';
+        message.style.margin = '10px 0';
+        message.style.border = '1px solid #f5c6cb';
+        message.style.borderRadius = '5px';
+        message.style.position = 'relative';
+        message.textContent = 'Debes iniciar sesión para guardar en favoritos.';
+
+        // Agregar un botón de cierre
+        const closeButton = document.createElement('button');
+        closeButton.textContent = 'X';
+        closeButton.style.position = 'absolute';
+        closeButton.style.top = '5px';
+        closeButton.style.right = '10px';
+        closeButton.style.background = 'none';
+        closeButton.style.border = 'none';
+        closeButton.style.color = '#721c24';
+        closeButton.style.cursor = 'pointer';
+        closeButton.onclick = () => message.remove();
+
+        message.appendChild(closeButton);
+        catalogContainer.insertBefore(message, catalogContainer.firstChild);
+    }
+}
+
+
 
 // Mostrar detalles del vehículo en el modal
 function showVehicleDetails(vehicleId) {
@@ -88,9 +127,53 @@ function closeModal() {
         document.getElementById('modalImage').src = '';
         document.getElementById('vehicleDetails').innerHTML = '';
     }
+    // Cargar vehículos al iniciar la página
+}
+
+function saveChanges() {
+    const form = document.getElementById('editVehicleForm');
+    const formData = new FormData(form);
+
+    fetch('updateVehicle.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Vehículo actualizado correctamente');
+            location.reload(); // Recargar la página para reflejar los cambios
+        } else {
+            alert('Error al actualizar el vehículo');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Hubo un error al actualizar el vehículo');
+    });
 }
 
 
+function loadVehicleData(vehicleId) {
+    // Cargar datos del vehículo en los campos del formulario usando AJAX
+    fetch('getVehicleDetails.php?id=' + vehicleId)
+        .then(response => response.json())
+        .then(data => {
+            if (data) {
+                document.getElementById('vehicleId').value = data.ID;
+                document.getElementById('modelo').value = data.Modelo;
+                document.getElementById('color').value = data.Color;
+                document.getElementById('anio').value = data.Año;
+                document.getElementById('precio').value = data.precio;
+            }
+        })
+        .catch(error => console.error('Error al cargar los datos:', error));
+}
 
-// Cargar vehículos al iniciar la página
+
 document.addEventListener('DOMContentLoaded', loadVehicles);
+
+// Otras funciones o código de tu script.js
+document.addEventListener('DOMContentLoaded', () => {
+    loadVehicles();
+});
